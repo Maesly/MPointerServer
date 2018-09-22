@@ -67,6 +67,9 @@ Server::Server() {
     }
 }
 
+
+
+
 void Server::recibirCliente(int *socket_cliente) {
 
     char mensaje_cliente[300];
