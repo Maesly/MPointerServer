@@ -10,20 +10,28 @@
 #include <arpa/inet.h>
 #include <iostream>
 #include "../DEFINITIONS.h"
+#include "JSON/json.hpp"
+#include "Lista_Enlazada_Simple.h"
+
+struct vectorNodosEliminados{
+    int ID = 0;
+    int* ptr = NULL;
+};
 
 class Server {
+
 private:
+    using json = nlohmann::json;
     int client_socket, server_socket;
     bool salir;
     int bufsize = 1024;
-    char* buffer = new char(bufsize);
-
-    struct sockaddr_in server_addr;
+    struct sockaddr_in server_addr = { AF_INET, htons(PUERTO_SERVER) } ;
     struct sockaddr_in cliente_addr;
     socklen_t size;
+    int contID = 0;
+    int* memoriaServer;
 
-    unsigned int tamDirClient;
-
+    Lista_Enlazada_Simple *head_map = new Lista_Enlazada_Simple();
 
 public:
 
@@ -32,7 +40,10 @@ public:
     void detener();
     void ejecutar();
     void iniciar();
+    void memoria_init(char bytes);
+    int* ingresarMemoria(int* offset, int valor);
+    int* offsetMemoria();
+    int* libre();
+    int generarID();
 };
-
-
 #endif //MPOINTER_SERVER_H
